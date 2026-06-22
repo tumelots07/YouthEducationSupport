@@ -86,4 +86,32 @@ http://localhost/YouthEducationSupport
 ## Authors
 
 Developed by Group Members for XISD5319 Work Integrated Learning Project.
+Group members:
+
+ST10452101_Tshiamo Tumelo Simango
+ST10172741-KEOAGILE LETLAPE
+ST10354054 - Thoriso Maenetja
+ST10387277 Khothatso Qobolo
+
+## Screenshots
+
+### Home Page
+
+![Home](screenshots/Home.jpg)
+
+### Student Dashboard
+
+![Student Dashboard](screenshots/Dashboard.jpg)
+
+### Admin Dashboard
+
+![Admin Dashboard](screenshots/adminDashboard.jpg)
+
+### Scholarships
+
+![Scholarships](screenshots/Scholarships.jpg)
+
+### Tutors
+
+![Tutors](screenshots/Tutoring.jpg)
 
