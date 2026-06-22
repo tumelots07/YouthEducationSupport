@@ -1,0 +1,15 @@
+# XAMPP files
+xampp/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/private/
+
+# Log files
+*.log

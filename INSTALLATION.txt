@@ -1,0 +1,22 @@
+YOUTH EDUCATION SUPPORT INSTALLATION GUIDE
+
+1. Install XAMPP.
+2. Start Apache and MySQL.
+3. Open phpMyAdmin.
+4. Create a database named:
+
+   youtheducationsupport
+
+5. Import:
+
+   youtheducationsupport.sql
+
+6. Copy the project folder into:
+
+   C:\xampp\htdocs\
+
+7. Open:
+
+   http://localhost/YouthEducationSupport
+
+8. Login using an existing account or create a new one.
