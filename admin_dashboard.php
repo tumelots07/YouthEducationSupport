@@ -62,6 +62,9 @@ $donations = mysqli_num_rows(mysqli_query($conn,"SELECT * FROM donations"));
 <a href="manage_applications.php">Applications</a>
 <a href="manage_volunteers.php">Volunteers</a>
 <a href="manage_donations.php">Donations</a>
+<a href="create_admin_invite.php" class="admin-invite-button">
+    Generate Admin Invitation
+</a>
 <a href="manage_contacts.php">Messages</a>
 <a href="profile.php">Profile</a>
 <a href="logout.php">Logout</a>
