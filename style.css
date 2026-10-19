@@ -261,3 +261,16 @@ body.dark-mode p,
 body.dark-mode td{
     color:white;
 }
+
+.password-help,
+#adminTokenSection small {
+    display: block;
+    margin: 6px 0 14px;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+#adminTokenSection[hidden] {
+    display: none;
+}
