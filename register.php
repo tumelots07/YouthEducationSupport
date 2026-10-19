@@ -1,184 +1,159 @@
+
 <?php
+session_start();
+require_once "db.php";
 
-include("db.php");
+$message = "";
 
-$message="";
+if (isset($_POST['register'])) {
+    $fullname = trim($_POST['fullname'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-if(isset($_POST['register'])){
+    // Validate the full name.
+    if (mb_strlen($fullname) < 3) {
+        $message = "Full name must be at least 3 characters.";
+    } elseif (mb_strlen($fullname) > 100) {
+        $message = "Full name cannot exceed 100 characters.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $message = "Please enter a valid email address.";
+    } elseif (strlen($email) > 254) {
+        $message = "Email address is too long.";
+    } elseif (
+        strlen($password) < 8 ||
+        !preg_match("/[A-Z]/", $password) ||
+        !preg_match("/[0-9]/", $password)
+    ) {
+        $message = "Password must contain at least 8 characters, one uppercase letter and one number.";
+    } else {
+        // Check whether the email already exists.
+        $checkSql = "SELECT id FROM users WHERE email = ? LIMIT 1";
+        $checkStmt = mysqli_prepare($conn, $checkSql);
 
-    $fullname=trim($_POST['fullname']);
-    $email=trim($_POST['email']);
-    $password=trim($_POST['password']);
-    $role=$_POST['role'];
-    $admin_code=trim($_POST['admin_code']);
+        if (!$checkStmt) {
+            $message = "Registration could not be completed. Please try again.";
+        } else {
+            mysqli_stmt_bind_param($checkStmt, "s", $email);
 
-    if(strlen($fullname)<3){
+            if (!mysqli_stmt_execute($checkStmt)) {
+                $message = "Registration could not be completed. Please try again.";
+            } else {
+                $result = mysqli_stmt_get_result($checkStmt);
 
-        $message="Full name must be at least 3 characters.";
+                if ($result && mysqli_num_rows($result) > 0) {
+                    $message = "Email already exists.";
+                } else {
+                    $hashedPassword = password_hash(
+                        $password,
+                        PASSWORD_DEFAULT
+                    );
 
-    }
-    elseif(!filter_var($email,FILTER_VALIDATE_EMAIL)){
+                    if ($hashedPassword === false) {
+                        $message = "Registration could not be completed. Please try again.";
+                    } else {
+                        // Public registration is for students only.
+                        $role = "student";
 
-        $message="Invalid email address.";
+                        $insertSql = "INSERT INTO users
+                            (fullname, email, password, role)
+                            VALUES (?, ?, ?, ?)";
 
-    }
-    elseif(
-        strlen($password)<8 ||
-        !preg_match("/[A-Z]/",$password) ||
-        !preg_match("/[0-9]/",$password)
-    ){
+                        $insertStmt = mysqli_prepare($conn, $insertSql);
 
-        $message=
-        "Password must contain at least 8 characters, one uppercase letter and one number.";
+                        if ($insertStmt) {
+                            mysqli_stmt_bind_param(
+                                $insertStmt,
+                                "ssss",
+                                $fullname,
+                                $email,
+                                $hashedPassword,
+                                $role
+                            );
 
-    }
-    elseif($role=="admin" && $admin_code!="YES2026"){
+                            if (mysqli_stmt_execute($insertStmt)) {
+                                mysqli_stmt_close($insertStmt);
+                                mysqli_stmt_close($checkStmt);
 
-        $message="Invalid admin code.";
+                                header("Location: login.php");
+                                exit();
+                            } else {
+                                $message = "Registration failed. Please try again.";
+                            }
 
-    }
-    else{
-
-        $check=mysqli_query(
-        $conn,
-        "SELECT * FROM users
-        WHERE email='$email'"
-        );
-
-        if(mysqli_num_rows($check)>0){
-
-            $message="Email already exists.";
-
-        }
-        else{
-
-            $hashedPassword=password_hash(
-            $password,
-            PASSWORD_DEFAULT
-            );
-
-            $sql=
-            "INSERT INTO users
-            (fullname,email,password,role)
-            VALUES
-            ('$fullname','$email','$hashedPassword','$role')";
-
-            if(mysqli_query($conn,$sql)){
-
-                header("Location: login.php");
-                exit();
-
+                            mysqli_stmt_close($insertStmt);
+                        } else {
+                            $message = "Registration could not be completed. Please try again.";
+                        }
+                    }
+                }
             }
-            else{
 
-                $message="Registration failed.";
-
-            }
-
+            mysqli_stmt_close($checkStmt);
         }
-
     }
-
 }
-
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-
-<title>Register</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Youth Education Support</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
 <div class="container">
+    <form method="POST" action="register.php">
+        <h2>Register</h2>
 
-<form method="POST">
+        <?php if ($message !== ""): ?>
+            <div class="error" role="alert">
+                <?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?>
+            </div>
+        <?php endif; ?>
 
-<h2>Register</h2>
+        <input
+            type="text"
+            name="fullname"
+            placeholder="Full Name"
+            minlength="3"
+            maxlength="100"
+            value="<?= htmlspecialchars($_POST['fullname'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+            autocomplete="name"
+            required
+        >
 
-<?php
+        <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            maxlength="254"
+            value="<?= htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+            autocomplete="email"
+            required
+        >
 
-if($message!=""){
+        <input
+            type="password"
+            name="password"
+            placeholder="Password (at least 8 characters, 1 uppercase and 1 number)"
+            minlength="8"
+            autocomplete="new-password"
+            required
+        >
 
-    echo "<div class='error'>$message</div>";
+        <button type="submit" name="register" value="1">
+            Register
+        </button>
 
-}
-
-?>
-
-<input
-type="text"
-name="fullname"
-placeholder="Full Name"
-required>
-
-<input
-type="email"
-name="email"
-placeholder="Email Address"
-required>
-
-<input
-type="password"
-name="password"
-placeholder="Password"
-required>
-
-<label>Role</label>
-
-<select
-name="role"
-required>
-
-<option value="student">
-
-Student
-
-</option>
-
-<option value="admin">
-
-Admin
-
-</option>
-
-</select>
-
-<input
-type="text"
-name="admin_code"
-placeholder="Admin Code (Admins only)">
-
-<button
-type="submit"
-name="register">
-
-Register
-
-</button>
-
-<p>
-
-Already have an account?
-
-<a href="login.php">
-
-Login
-
-</a>
-
-</p>
-
-</form>
-
+        <p>
+            Already have an account?
+            <a href="login.php">Login</a>
+        </p>
+    </form>
 </div>
 
 <script src="darkmode.js"></script>
-
 </body>
 </html>
