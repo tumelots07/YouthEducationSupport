@@ -9,6 +9,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
+// Retrieve study materials, with newest records displayed first.
 $result = mysqli_query(
     $conn,
     "SELECT id, title, subject, description, link
@@ -22,6 +23,7 @@ if ($queryError) {
     error_log("Materials query failed: " . mysqli_error($conn));
 }
 
+// Safely escape values before displaying them in HTML.
 function escapeMaterial($value): string
 {
     return htmlspecialchars(
@@ -31,19 +33,21 @@ function escapeMaterial($value): string
     );
 }
 
-// Only links using HTTP or HTTPS are shown as external resources.
+// Allow only valid HTTP and HTTPS external links.
 function isSafeExternalLink(string $link): bool
 {
     if (!filter_var($link, FILTER_VALIDATE_URL)) {
         return false;
     }
 
-    $scheme = strtolower((string)parse_url($link, PHP_URL_SCHEME));
+    $scheme = strtolower(
+        (string)parse_url($link, PHP_URL_SCHEME)
+    );
 
     return in_array($scheme, ['http', 'https'], true);
 }
 
-// Uploaded PDFs use a random 32-character hexadecimal filename.
+// Uploaded PDFs must use the expected random filename format.
 function isUploadedPdfPath(string $link): bool
 {
     return preg_match(
@@ -71,7 +75,18 @@ function isUploadedPdfPath(string $link): bool
         .material-action {
             display: inline-block;
             margin: 8px 8px 0 0;
+            padding: 10px 16px;
+            border-radius: 5px;
+            background: #0077cc;
+            color: #ffffff;
             text-decoration: none;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+
+        .material-action:hover {
+            opacity: 0.9;
         }
 
         .materials-notice {
@@ -93,6 +108,7 @@ function isUploadedPdfPath(string $link): bool
 </head>
 
 <body>
+
 <header>
     <h1>Study Materials</h1>
 
@@ -113,13 +129,18 @@ function isUploadedPdfPath(string $link): bool
 </header>
 
 <main class="container">
+
     <h2>Available Learning Resources</h2>
-    <p>Browse your study resources and download available PDF notes.</p>
+
+    <p>
+        Browse your study resources and download available PDF notes.
+    </p>
 
     <?php if ($queryError): ?>
 
         <p class="materials-notice materials-error" role="alert">
-            Study materials could not be loaded. Please try again later.
+            Study materials could not be loaded.
+            Please try again later.
         </p>
 
     <?php elseif (mysqli_num_rows($result) === 0): ?>
@@ -131,14 +152,23 @@ function isUploadedPdfPath(string $link): bool
     <?php else: ?>
 
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
+
             <?php
                 $link = trim((string)($row['link'] ?? ''));
+
                 $isPdf = isUploadedPdfPath($link);
-                $isExternal = $link !== '' && isSafeExternalLink($link);
+
+                $isExternal = (
+                    $link !== '' &&
+                    isSafeExternalLink($link)
+                );
             ?>
 
             <section class="card material-card">
-                <h2><?= escapeMaterial($row['title']) ?></h2>
+
+                <h2>
+                    <?= escapeMaterial($row['title']) ?>
+                </h2>
 
                 <p>
                     <strong>Subject:</strong>
@@ -151,36 +181,50 @@ function isUploadedPdfPath(string $link): bool
 
                 <?php if ($isPdf): ?>
 
-                    <a class="material-action"
-                       href="download_material.php?id=<?= (int)$row['id'] ?>">
-                        <button type="button">Download PDF</button>
+                    <a
+                        class="material-action"
+                        href="download_material.php?id=<?= (int)$row['id'] ?>"
+                    >
+                        Download PDF
                     </a>
 
                 <?php elseif ($isExternal): ?>
 
-                    <a class="material-action"
-                       href="<?= escapeMaterial($link) ?>"
-                       target="_blank"
-                       rel="noopener noreferrer">
-                        <button type="button">Open External Resource</button>
+                    <a
+                        class="material-action"
+                        href="<?= escapeMaterial($link) ?>"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Open External Resource
                     </a>
 
                 <?php elseif ($link === ''): ?>
 
-                    <p>This resource does not have a download or external link yet.</p>
+                    <p>
+                        This resource does not have a download
+                        or external link yet.
+                    </p>
 
                 <?php else: ?>
 
-                    <p>This resource link is unavailable. Please contact the administrator.</p>
+                    <p>
+                        This resource link is unavailable.
+                        Please contact the administrator.
+                    </p>
 
                 <?php endif; ?>
+
             </section>
+
         <?php endwhile; ?>
 
     <?php endif; ?>
+
 </main>
 
 <script src="darkmode.js"></script>
+
 </body>
 </html>
 
