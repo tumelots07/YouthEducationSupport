@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 include("db.php");
 
 if(!isset($_SESSION['user'])){
@@ -21,11 +21,13 @@ $conn,
 
 <title>Tutors</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 
 </head>
 
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 
 <header>
 
@@ -49,6 +51,8 @@ $conn,
 </nav>
 
 </header>
+<?php $pageHeroTitle = 'Academic Tutoring'; $pageHeroText = 'Connect with tutoring support to strengthen your learning.'; $pageHeroImage = 'https://images.pexels.com/photos/5428011/pexels-photo-5428011.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <div class="container">
 

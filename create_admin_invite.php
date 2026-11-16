@@ -1,6 +1,6 @@
 
 <?php
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 require_once "db.php";
 
 // Only an existing administrator may generate invitations.
@@ -65,9 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Admin Invitation | Youth Education Support</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=8">
 </head>
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+<?php $pageHeroTitle = 'Administrator Invitations'; $pageHeroText = 'Create secure, one-time invitations for authorised administrators.'; $pageHeroImage = 'management.svg'; require __DIR__ . "/includes/page_hero.php"; ?>
+
+
 <div class="container">
     <h2>Create Admin Invitation</h2>
 

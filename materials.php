@@ -1,6 +1,6 @@
 
 <?php
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 require_once "db.php";
 
 // Study materials are available only to logged-in users.
@@ -64,7 +64,7 @@ function isUploadedPdfPath(string $link): bool
 
     <title>Study Materials - Youth Education Support</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=8">
 
     <style>
         .material-card {
@@ -107,7 +107,9 @@ function isUploadedPdfPath(string $link): bool
     </style>
 </head>
 
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 
 <header>
     <h1>Study Materials</h1>
@@ -127,6 +129,8 @@ function isUploadedPdfPath(string $link): bool
         <a href="logout.php">Logout</a>
     </nav>
 </header>
+<?php $pageHeroTitle = 'Study Materials'; $pageHeroText = 'Find useful learning resources to support your academic progress.'; $pageHeroImage = 'https://images.pexels.com/photos/9572700/pexels-photo-9572700.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <main class="container">
 

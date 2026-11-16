@@ -1,0 +1,44 @@
+YOUTH EDUCATION SUPPORT - FINAL ACCOUNT AND SCHOLARSHIP UPDATES
+===============================================================
+
+1. BACK UP FIRST
+- Copy your current YouthEducationSupport folder.
+- In phpMyAdmin, export the youth_education_support database before changing it.
+
+2. ADD THE SCHOLARSHIP APPLICATION LINK COLUMN
+- Start Apache and MySQL in XAMPP.
+- Open http://localhost/phpmyadmin/
+- Select the youth_education_support database.
+- Open the Import tab.
+- Import add_scholarship_application_url.sql from this project.
+- This adds an optional application_url column to the existing scholarships table.
+- Do not re-import the full database dump. This is an additive update and keeps existing scholarship records.
+
+3. ADD OR EDIT A SCHOLARSHIP AS ADMIN
+- Sign in with an administrator account.
+- Open Scholarships in the admin sidebar.
+- Enter title, provider, deadline, description and the official application URL.
+- Use the complete URL, including https:// (for example https://www.nsfas.org.za/).
+- Save the scholarship. The edit form also lets you update the link later.
+- A student clicking Apply Now is sent to the saved official website in a new tab.
+- If no external URL is saved, the existing internal scholarship application form remains available.
+- NSFAS and Funza Lushaka still have their recognised official link fallbacks.
+
+4. PROFILE PASSWORD CHANGE
+- Open Profile.
+- Enter your current password, new password and confirmation.
+- Password changes are accepted only when the current password is correct, the new password is at least 8 characters, and both new-password fields match.
+- Leave all password fields blank when only changing your name/email.
+
+5. DONATE SIDEBAR LINK
+- The repeated Donate/Manage Donations item has been removed from the regular sidebar link list.
+- One dedicated Donate action remains for students; one Manage Donations action remains for administrators.
+
+6. HOME PAGE DARK MODE
+- Use the Dark mode button in the home-page header.
+- Your selection is saved in this browser and restored when you return.
+
+7. TESTING
+- All PHP files were checked with php -l.
+- Test on your local XAMPP installation after importing the additive SQL update.
+- Test adding/editing a scholarship URL, opening it as a student, profile password changes (correct and incorrect current password), the sidebar donation link count, and the home-page theme toggle.

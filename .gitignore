@@ -13,3 +13,20 @@ nbproject/private/
 
 # Log files
 *.log
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+config.local.php
+*.pem
+*.key
+
+# User-uploaded files
+uploads/*
+!uploads/.htaccess
+
+# Temporary files
+*.tmp
+*.bak
+
+youth_education_support.sql

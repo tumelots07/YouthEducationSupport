@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 include("db.php");
 
 // Check if user is logged in and is admin

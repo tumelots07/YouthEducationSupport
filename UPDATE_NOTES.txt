@@ -1,0 +1,40 @@
+YOUTH EDUCATION SUPPORT - WEBSITE UPDATE
+==========================================
+
+This package is based on the latest uploaded YouthEducationSupport (2).zip.
+
+IMPORTANT BACKUP
+1. Make a copy of your existing YouthEducationSupport folder.
+2. Export the youth_education_support database from phpMyAdmin.
+3. Extract this ZIP and copy the updated project folder into C:\xampp\htdocs\
+   (or replace your existing project folder only after backing it up).
+
+WHAT WAS UPDATED
+- Added includes/auth.php as the shared PHP session/authentication helper.
+- Kept PHP's standard session name so existing pages can read the same login session.
+- Updated login.php to use the shared session, password_verify, prepared SQL and CSRF token.
+- Updated logout.php so Switch Account logs out immediately and opens login.php?switched=1.
+- Rebuilt student and administrator dashboards in the visual style of the home page.
+- Preserved the student's four statistics and eight quick-access cards.
+- Preserved the administrator's ten statistics and eight quick-action cards, plus management shortcuts.
+- Added local SVG illustrations under assets/illustrations/ (no external image host required).
+- Added illustrated page banners to public pages and management pages.
+- Added dashboard grid, card and responsive styling to style.css.
+- Routed existing PHP session_start() calls through the shared auth helper.
+
+DATABASE
+- No database tables or records were intentionally changed.
+- Keep your existing youth_education_support database.
+- No SQL import is required for these visual/session updates.
+
+TESTING
+- All PHP files passed `php -l` syntax checks in the preparation environment.
+- This does not replace testing on your own XAMPP + MySQL database.
+- After installing, open http://localhost/YouthEducationSupport/login.php
+- Test a student login, student page links, Switch Account, then admin login.
+- If an individual page still redirects unexpectedly, note its filename and error.
+
+SECURITY NOTE
+- This is centralised session-based authentication for the PHP website.
+- It is not federated SSO between separate applications.
+- The 30-minute timeout is based on inactivity. Switch Account ends the session immediately.

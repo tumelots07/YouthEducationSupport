@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 include("db.php");
 
 $result=mysqli_query(
@@ -16,11 +16,13 @@ ORDER BY created_at DESC");
 
 <title>Announcements</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 
 </head>
 
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 
 <header>
 
@@ -44,6 +46,8 @@ ORDER BY created_at DESC");
 </nav>
 
 </header>
+<?php $pageHeroTitle = 'Latest Announcements'; $pageHeroText = 'Keep up with news, updates and important information.'; $pageHeroImage = 'https://images.pexels.com/photos/5940827/pexels-photo-5940827.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <div class="container">
 

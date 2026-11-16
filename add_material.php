@@ -1,6 +1,6 @@
 
 <?php
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 require_once "db.php";
 
 if (
@@ -188,7 +188,7 @@ function escapeMaterialValue($value): string
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Study Material - Youth Education Support</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=8">
     <style>
         .form-message {
             padding: 12px;
@@ -212,7 +212,9 @@ function escapeMaterialValue($value): string
         }
     </style>
 </head>
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 <header>
     <h1>Add Study Material</h1>
     <nav>
@@ -223,6 +225,8 @@ function escapeMaterialValue($value): string
         <a href="logout.php">Logout</a>
     </nav>
 </header>
+<?php $pageHeroTitle = 'Add Study Material'; $pageHeroText = 'Upload and organise a learning resource for students.'; $pageHeroImage = 'https://images.pexels.com/photos/6283211/pexels-photo-6283211.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <div class="container">
     <form class="material-form" method="POST"

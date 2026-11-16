@@ -1,6 +1,6 @@
 
 <?php
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 require_once "db.php";
 
 // Only logged-in users may download study materials.

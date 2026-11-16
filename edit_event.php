@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 include("db.php");
 
 $id=$_GET['id'];
@@ -39,9 +39,13 @@ if(isset($_POST['update'])){
 <html>
 <head>
 <title>Edit Event</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+<?php $pageHeroTitle = 'Edit Event'; $pageHeroText = 'Update the details of an educational event or activity.'; $pageHeroImage = 'https://images.pexels.com/photos/5940827/pexels-photo-5940827.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
+
 
 <div class="container">
 

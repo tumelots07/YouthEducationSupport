@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 include("db.php");
 
 if($_SESSION['role']!="admin"){
@@ -47,10 +47,14 @@ header("Location: manage_materials.php");
 
 <title>Edit Material</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 
 </head>
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+<?php $pageHeroTitle = 'Edit Study Material'; $pageHeroText = 'Update the information and availability of a learning resource.'; $pageHeroImage = 'https://images.pexels.com/photos/6283211/pexels-photo-6283211.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
+
 
 <div class="container">
 

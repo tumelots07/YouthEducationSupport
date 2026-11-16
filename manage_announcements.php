@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 include("db.php");
 
 if(!isset($_SESSION['user']) || $_SESSION['role']!="admin"){
@@ -30,9 +30,11 @@ $conn,
 <html>
 <head>
 <title>Manage Announcements</title>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 
 <header>
 
@@ -58,6 +60,8 @@ $conn,
 </nav>
 
 </header>
+<?php $pageHeroTitle = 'Manage Announcements'; $pageHeroText = 'Publish and maintain platform announcements.'; $pageHeroImage = 'https://images.pexels.com/photos/5940827/pexels-photo-5940827.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <div class="container">
 

@@ -1,6 +1,6 @@
 
 <?php
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 require_once "db.php";
 
 // Only logged-in administrators may view contact messages.
@@ -44,7 +44,7 @@ function escapeContactValue($value): string
 
     <title>Manage Contact Messages - Youth Education Support</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=8">
 
     <style>
         .contacts-container {
@@ -107,7 +107,9 @@ function escapeContactValue($value): string
     </style>
 </head>
 
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 
 <header>
     <h1>Manage Contact Messages</h1>
@@ -127,6 +129,8 @@ function escapeContactValue($value): string
         <a href="logout.php">Logout</a>
     </nav>
 </header>
+<?php $pageHeroTitle = 'Contact Messages'; $pageHeroText = 'Review enquiries submitted through the website.'; $pageHeroImage = 'https://images.pexels.com/photos/5940827/pexels-photo-5940827.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <main class="contacts-container">
 

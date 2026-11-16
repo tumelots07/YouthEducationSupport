@@ -1,0 +1,47 @@
+YOUTH EDUCATION SUPPORT - REFERENCE-INSPIRED REDESIGN
+=====================================================
+
+This redesign uses the eight reference screenshots supplied with the request.
+It is based on the previously uploaded complete Youth Education Support website.
+
+DESIGN DIRECTION
+- Deep navy blue, teal and orange colour palette.
+- Modern white cards, rounded corners, soft shadows and clear typography.
+- Responsive layouts for desktop, tablet and mobile.
+- Separate registration and login pages with matching visual styling; no combined split-screen form.
+- Student and administrator dashboards now use a left sidebar on desktop and a collapsible navigation on smaller screens.
+- Illustrated page banners and consistent styling for existing content and management pages.
+- Dark-mode styling compatibility retained and refined.
+
+PAGES AND FUNCTIONALITY
+- Existing PHP pages and their filenames have been retained.
+- Existing scholarship search and application links have been retained.
+- Existing study material, events, tutors, announcements, volunteer, donation and contact pages have been retained.
+- Existing admin management/CRUD pages have been retained.
+- Existing database connection and SQL export have been retained.
+- Registration backend validation, password hashing, CSRF protection and one-time admin invitation logic have been retained.
+- Login backend uses the existing users table and password_verify.
+- Dashboard cards and links are retained; layout has been restyled.
+
+DATABASE
+No database tables or records have intentionally been deleted or replaced.
+Use your existing youth_education_support database. No SQL re-import is required for the visual redesign.
+
+INSTALLATION
+1. Make a backup copy of your current website folder.
+2. Export your database in phpMyAdmin before replacing files.
+3. Extract this ZIP.
+4. Copy the YouthEducationSupport folder into C:\xampp\htdocs\
+   (or replace your old folder only after taking the backup).
+5. Open http://localhost/YouthEducationSupport/
+
+TESTING
+All PHP files were checked using php -l in the preparation environment.
+The pages have not been executed against your local XAMPP/MySQL database.
+After installation, test student registration/login, admin invitation registration,
+both dashboards, CRUD pages, scholarship applications, forms and dark mode.
+
+IMPORTANT
+The login panel embedded on the registration page submits to login.php and uses
+the same PHP session and CSRF token as the standalone login page.
+This is centralised PHP website session authentication, not federated SSO.

@@ -1,11 +1,11 @@
 
 <?php
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 require_once "db.php";
 
 $message = "";
 
-// Generate a CSRF token to protect the form.
+// Generate CSRF tokens for both registration and the embedded login form.
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -177,100 +177,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['register'])) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | Youth Education Support</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register | Youth Education Support</title>
+<link rel="icon" type="image/svg+xml" href="assets/yes-logo.svg">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
-<body>
-
-<div class="container">
-    <form method="POST" action="register.php">
-        <h2>Create an Account</h2>
-
-        <?php if ($message !== ""): ?>
-            <div class="error" role="alert">
-                <?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?>
-            </div>
-        <?php endif; ?>
-
-        <input type="hidden" name="csrf_token"
-            value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
-
-        <label for="fullname">Full Name</label>
-        <input id="fullname" type="text" name="fullname"
-            placeholder="Enter your full name"
-            minlength="3" maxlength="100"
-            value="<?= htmlspecialchars($_POST['fullname'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-            autocomplete="name" required>
-
-        <label for="email">Email Address</label>
-        <input id="email" type="email" name="email"
-            placeholder="Enter your email address"
-            maxlength="254"
-            value="<?= htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-            autocomplete="email" required>
-
-        <label for="role">Account Type</label>
-        <select id="role" name="role" required>
-            <option value="student"
-                <?= (($_POST['role'] ?? 'student') === 'student') ? 'selected' : '' ?>>
-                Student
-            </option>
-            <option value="admin"
-                <?= (($_POST['role'] ?? '') === 'admin') ? 'selected' : '' ?>>
-                Admin
-            </option>
-        </select>
-
-        <div id="adminTokenSection" hidden>
-            <label for="admin_token">Admin Invitation Token</label>
-            <input id="admin_token" type="password" name="admin_token"
-                placeholder="Enter your one-time invitation token"
-                autocomplete="off">
-            <small>Get this token from an existing administrator. It expires after 24 hours and can only be used once.</small>
-        </div>
-
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password"
-            placeholder="Create a password"
-            autocomplete="new-password" required>
-
-        <small class="password-help">
-            Password requirements: at least 8 characters, one uppercase letter,
-            and one number.
-        </small>
-
-        <label for="confirm_password">Confirm Password</label>
-        <input id="confirm_password" type="password" name="confirm_password"
-            placeholder="Re-enter your password"
-            autocomplete="new-password" required>
-
-        <button type="submit" name="register" value="1">Register</button>
-
-        <p>Already have an account? <a href="login.php">Login</a></p>
-    </form>
-</div>
-
+<body class="auth-page">
+<header class="site-header">
+ <div class="nav-shell">
+  <a class="brand" href="index.php"><img src="assets/yes-logo.svg" alt="Youth Education Support logo"><span>Youth Education <strong>Support</strong></span></a>
+  <nav class="main-nav"><a href="index.php">Home</a><a class="nav-login" href="login.php">Login</a></nav>
+ </div>
+</header>
+<main class="auth-layout">
+ <section class="auth-visual">
+  <span class="section-kicker">JOIN OUR COMMUNITY</span>
+  <h1>Build your future with <em>the right support.</em></h1>
+  <p>Create your Youth Education Support account to discover scholarships, learning resources, tutoring and opportunities that can help you succeed.</p>
+  <img src="assets/illustrations/learning-community.svg" alt="Illustration representing students learning together">
+ </section>
+ <section class="auth-panel">
+  <h2>Create your account</h2>
+  <p class="auth-subtitle">Complete the form below to get started.</p>
+  <?php if ($message !== ""): ?><div class="error" role="alert"><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></div><?php endif; ?>
+  <form method="POST" action="register.php">
+   <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8') ?>">
+   <label for="fullname">Full name</label>
+   <input id="fullname" type="text" name="fullname" placeholder="Enter your full name" minlength="3" maxlength="100" value="<?= htmlspecialchars($_POST['fullname'] ?? '', ENT_QUOTES, 'UTF-8') ?>" autocomplete="name" required>
+   <label for="email">Email address</label>
+   <input id="email" type="email" name="email" placeholder="you@example.com" maxlength="254" value="<?= htmlspecialchars($_POST['email'] ?? '', ENT_QUOTES, 'UTF-8') ?>" autocomplete="email" required>
+   <label for="password">Password</label>
+   <input id="password" type="password" name="password" placeholder="At least 8 characters, one uppercase letter and one number" minlength="8" autocomplete="new-password" required>
+   <label for="confirm_password">Confirm password</label>
+   <input id="confirm_password" type="password" name="confirm_password" placeholder="Re-enter your password" minlength="8" autocomplete="new-password" required>
+   <label for="role">Account type</label>
+   <select id="role" name="role" required>
+    <option value="student" <?= (($_POST['role'] ?? 'student') === 'student') ? 'selected' : '' ?>>Student</option>
+    <option value="admin" <?= (($_POST['role'] ?? '') === 'admin') ? 'selected' : '' ?>>Admin (invitation required)</option>
+   </select>
+   <div id="adminTokenSection" class="admin-token-field" <?= (($_POST['role'] ?? '') === 'admin') ? '' : 'hidden' ?>>
+    <label for="admin_token">Administrator invitation token</label>
+    <input id="admin_token" type="text" name="admin_token" placeholder="Enter your one-time invitation token" value="<?= htmlspecialchars($_POST['admin_token'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+    <small>Admin accounts require a valid one-time invitation from an existing administrator.</small>
+   </div>
+   <button type="submit" name="register" value="1" class="btn btn-orange auth-submit">Create Account</button>
+  </form>
+  <p class="auth-register">Already have an account? <a href="login.php">Sign in</a></p>
+ </section>
+</main>
+<footer class="auth-footer">© <?= date('Y') ?> Youth Education Support · <a href="contact.php">Help & Contact</a></footer>
 <script>
-const roleSelect = document.getElementById('role');
-const adminSection = document.getElementById('adminTokenSection');
-const adminToken = document.getElementById('admin_token');
-
-function updateAdminField() {
-    const isAdmin = roleSelect.value === 'admin';
-    adminSection.hidden = !isAdmin;
-    adminToken.required = isAdmin;
-
-    if (!isAdmin) {
-        adminToken.value = '';
-    }
-}
-
-roleSelect.addEventListener('change', updateAdminField);
-updateAdminField();
+const roleSelect=document.getElementById('role');
+const tokenSection=document.getElementById('adminTokenSection');
+const tokenInput=document.getElementById('admin_token');
+function updateAdminToken(){const admin=roleSelect.value==='admin';tokenSection.hidden=!admin;tokenInput.required=admin;}
+roleSelect.addEventListener('change',updateAdminToken);updateAdminToken();
 </script>
-
-<script src="darkmode.js"></script>
-</body>
-</html>
+</body></html>

@@ -1,7 +1,7 @@
 
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 require_once "db.php";
 
 // Only administrators may manage users.
@@ -83,7 +83,7 @@ if ($result === false) {
 
     <title>Manage Users - Youth Education Support</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=8">
 
     <style>
         .users-table-wrapper {
@@ -147,7 +147,9 @@ if ($result === false) {
 
 </head>
 
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 
 <header>
 
@@ -171,6 +173,8 @@ if ($result === false) {
     </nav>
 
 </header>
+<?php $pageHeroTitle = 'Manage Users'; $pageHeroText = 'Review and manage registered platform accounts.'; $pageHeroImage = 'management.svg'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <main class="container">
 

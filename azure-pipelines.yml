@@ -1,0 +1,33 @@
+
+trigger:
+  branches:
+    include:
+      - main
+      - master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+
+  - task: Bash@3
+    displayName: Install PHP CLI
+    inputs:
+      targetType: inline
+      script: |
+        sudo apt-get update
+        sudo apt-get install -y php-cli
+        php -v
+
+  - task: Bash@3
+    displayName: Check PHP syntax
+    inputs:
+      targetType: inline
+      script: |
+        set -e
+        echo "Checking PHP files..."
+        find . -type f -name "*.php" \
+          -not -path "./.git/*" \
+          -print0 | xargs -0 -r -n1 php -l
+        echo "PHP syntax checks completed."

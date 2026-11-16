@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-label="Education announcements">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0877c9"/><stop offset="1" stop-color="#e9752d"/></linearGradient>
+ <linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#eaf4ff"/></linearGradient>
+</defs>
+<rect width="720" height="420" rx="34" fill="url(#bg)"/>
+<circle cx="610" cy="68" r="105" fill="#fff" opacity=".09"/><circle cx="82" cy="355" r="145" fill="#fff" opacity=".08"/>
+<path d="M0 325 Q180 270 350 330 T720 300 V420 H0Z" fill="#061d50" opacity=".22"/>
+<rect x="100" y="76" width="520" height="265" rx="24" fill="url(#card)" opacity=".97"/>
+<rect x="132" y="108" width="212" height="18" rx="9" fill="#0877c9" opacity=".9"/>
+<rect x="132" y="145" width="310" height="10" rx="5" fill="#c6d3e4"/>
+<rect x="132" y="166" width="260" height="10" rx="5" fill="#d7e1ed"/>
+<rect x="132" y="208" width="150" height="88" rx="14" fill="#e9752d" opacity=".18"/>
+<rect x="298" y="208" width="150" height="88" rx="14" fill="#0877c9" opacity=".13"/>
+<rect x="464" y="208" width="124" height="88" rx="14" fill="#f4772b" opacity=".18"/>
+<circle cx="207" cy="246" r="19" fill="#e9752d"/><path d="M176 285 Q207 247 238 285Z" fill="#e9752d"/>
+<path d="M344 272 l24 -34 24 34Z" fill="#0877c9"/><rect x="359" y="239" width="18" height="33" rx="3" fill="#0877c9"/>
+<path d="M490 268 q28 -48 56 0" fill="none" stroke="#e9752d" stroke-width="9" stroke-linecap="round"/><circle cx="518" cy="238" r="12" fill="#e9752d"/>
+<circle cx="560" cy="80" r="24" fill="#fff" opacity=".85"/><path d="M550 80 l8 8 15 -18" fill="none" stroke="#e9752d" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="132" y="326" font-family="Arial,sans-serif" font-size="14" font-weight="700" fill="#0877c9">EDUCATION ANNOUNCEMENTS</text>
+</svg>

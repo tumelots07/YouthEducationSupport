@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 560" role="img" aria-label="STUDY SMARTER">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#13277f"/><stop offset="1" stop-color="#079b9b"/></linearGradient></defs>
+<rect width="900" height="560" rx="34" fill="url(#g)"/>
+<circle cx="790" cy="90" r="160" fill="#fff" opacity=".08"/><circle cx="40" cy="530" r="180" fill="#fff" opacity=".07"/>
+<path d="M0 420 Q220 330 440 420 T900 390 V560 H0Z" fill="#07194f" opacity=".3"/>
+<g opacity=".95">
+<rect x="560" y="145" width="220" height="250" rx="22" fill="#fff"/>
+<rect x="590" y="180" width="160" height="18" rx="9" fill="#13277f" opacity=".85"/>
+<rect x="590" y="220" width="130" height="10" rx="5" fill="#c8d4e3"/>
+<rect x="590" y="244" width="145" height="10" rx="5" fill="#c8d4e3"/>
+<rect x="590" y="268" width="110" height="10" rx="5" fill="#c8d4e3"/>
+<rect x="590" y="310" width="70" height="54" rx="10" fill="#079b9b" opacity=".25"/>
+<rect x="674" y="310" width="76" height="54" rx="10" fill="#13277f" opacity=".18"/>
+<path d="M170 330 L270 180 L370 330Z" fill="#fff" opacity=".92"/>
+<path d="M225 330 L270 250 L315 330Z" fill="#079b9b"/>
+<circle cx="270" cy="155" r="34" fill="#f5a23b"/>
+<path d="M220 390 Q270 320 320 390" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+</g>
+<text x="75" y="110" font-family="Arial,sans-serif" font-size="25" font-weight="700" fill="#9debe5" letter-spacing="5">YOUTH EDUCATION SUPPORT</text>
+<text x="75" y="455" font-family="Arial,sans-serif" font-size="42" font-weight="800" fill="#fff">STUDY SMARTER</text>
+<text x="78" y="500" font-family="Arial,sans-serif" font-size="22" fill="#eaf4ff">Books, notes and learning resources</text>
+</svg>

@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 include("db.php");
 
 if(!isset($_SESSION['user'])){
@@ -52,11 +52,15 @@ VALUES
 
 <title>Application Successful</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 
 </head>
 
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+<?php $pageHeroTitle = 'Scholarship Application'; $pageHeroText = 'Complete the next step towards an educational funding opportunity.'; $pageHeroImage = 'https://images.pexels.com/photos/7713349/pexels-photo-7713349.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
+
 
 <div class="container">
 

@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 include("db.php");
 
 if(!isset($_SESSION['user'])){
@@ -53,7 +53,22 @@ if(!$result){
 
 }
 
+
 $count=mysqli_num_rows($result);
+
+// Verified official destinations for well-known South African funding schemes.
+// Other providers are not assigned guessed URLs.
+function officialScholarshipUrl($title, $provider) {
+    $text = strtolower($title . ' ' . $provider);
+    if (strpos($text, 'nsfas') !== false || strpos($text, 'national student financial aid') !== false) {
+        return ['url' => 'https://www.nsfas.org.za/content/how-to-apply.html', 'label' => 'Visit official NSFAS website'];
+    }
+    if (strpos($text, 'funza lushaka') !== false) {
+        return ['url' => 'https://www.eservices.gov.za/FunzaLushaka/', 'label' => 'Visit Funza Lushaka application portal'];
+    }
+    return null;
+}
+
 
 ?>
 
@@ -63,11 +78,13 @@ $count=mysqli_num_rows($result);
 
 <title>Scholarships</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 
 </head>
 
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 
 <header>
 
@@ -91,6 +108,8 @@ $count=mysqli_num_rows($result);
 </nav>
 
 </header>
+<?php $pageHeroTitle = 'Scholarship Opportunities'; $pageHeroText = 'Explore funding opportunities that can help you continue your studies.'; $pageHeroImage = 'https://images.pexels.com/photos/7713349/pexels-photo-7713349.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <div class="container">
 
@@ -146,7 +165,12 @@ while($row=mysqli_fetch_assoc($result)){
 
 ?>
 
-<div class="card">
+<div class="card scholarship-card">
+
+<div class="scholarship-card-art">
+<img src="https://images.pexels.com/photos/7713349/pexels-photo-7713349.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Scholarship funding illustration" loading="lazy">
+<span>FUNDING OPPORTUNITY</span>
+</div>
 
 <h3>
 
@@ -178,15 +202,26 @@ while($row=mysqli_fetch_assoc($result)){
 
 <br>
 
-<a href="apply_scholarship.php?id=<?php echo $row['id']; ?>">
-
-<button>
-
-Apply Now
-
-</button>
-
+<?php
+$officialLink = null;
+if (!empty($row['application_url'])) {
+    $savedUrl = trim($row['application_url']);
+    if (filter_var($savedUrl, FILTER_VALIDATE_URL) &&
+        in_array(strtolower((string)parse_url($savedUrl, PHP_URL_SCHEME)), ['http','https'], true)) {
+        $officialLink = ['url' => $savedUrl];
+    }
+}
+if (!$officialLink) $officialLink = officialScholarshipUrl($row['title'] ?? '', $row['provider'] ?? '');
+?>
+<?php if ($officialLink): ?>
+<a class="scholarship-apply-button official-apply-button" href="<?php echo htmlspecialchars($officialLink['url'], ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer">
+Apply Now <span aria-hidden="true">↗</span>
 </a>
+<?php else: ?>
+<a class="scholarship-apply-button" href="apply_scholarship.php?id=<?php echo (int)$row['id']; ?>">
+Apply Now <span aria-hidden="true">→</span>
+</a>
+<?php endif; ?>
 
 </div>
 

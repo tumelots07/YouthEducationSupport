@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 include("db.php");
 
 if(!isset($_SESSION['user'])){
@@ -63,17 +63,21 @@ header("Refresh:2; url=tutors.php");
 
 <title>Book Tutor Session</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 
 </head>
 
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 
 <header>
 
 <h1>Book Tutor Session</h1>
 
 </header>
+<?php $pageHeroTitle = 'Book a Tutoring Session'; $pageHeroText = 'Request academic support from an available tutor.'; $pageHeroImage = 'https://images.pexels.com/photos/5428011/pexels-photo-5428011.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <div class="container">
 

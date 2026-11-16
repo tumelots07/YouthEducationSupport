@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+require_once __DIR__ . "/includes/auth.php";
 
 include("db.php");
 
@@ -38,11 +38,13 @@ if(isset($_POST['submit'])){
 
 <title>Volunteer</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=8">
 
 </head>
 
-<body>
+<body class="has-app-sidebar">
+<?php require_once __DIR__ . "/includes/sidebar.php"; ?>
+
 
 <header>
 
@@ -66,6 +68,8 @@ if(isset($_POST['submit'])){
 </nav>
 
 </header>
+<?php $pageHeroTitle = 'Volunteer With Us'; $pageHeroText = 'Share your time and skills to support learners and communities.'; $pageHeroImage = 'https://images.pexels.com/photos/6503098/pexels-photo-6503098.jpeg?auto=compress&cs=tinysrgb&w=1400'; require __DIR__ . "/includes/page_hero.php"; ?>
+
 
 <div class="container">
 

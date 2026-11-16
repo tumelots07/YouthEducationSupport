@@ -1,0 +1,57 @@
+YOUTH EDUCATION SUPPORT - GOOGLE SIGN-IN (LOCAL XAMPP)
+
+1. BACK UP FIRST
+   - Copy your current C:\xampp\htdocs\YouthEducationSupport folder.
+   - Export the youth_education_support database in phpMyAdmin.
+
+2. COPY THE UPDATED WEBSITE
+   - Extract this package and copy/merge the YouthEducationSupport folder into:
+     C:\xampp\htdocs\YouthEducationSupport
+   - Allow the new Google sign-in files to be added and login.php to be replaced.
+
+3. UPDATE THE DATABASE (ONE TIME ONLY)
+   - Start Apache and MySQL in XAMPP.
+   - Open http://localhost/phpmyadmin/
+   - Select youth_education_support.
+   - Open the Import tab and import add_google_signin.sql.
+   - This is an additive migration. Do NOT import the full database dump again.
+
+4. GOOGLE CLOUD CONFIGURATION
+   - Open https://console.cloud.google.com/auth/clients
+   - Create OAuth client ID -> Web application.
+   - Name it Youth Education Support Local.
+   - Authorized JavaScript origins: http://localhost
+   - If you browse the site using http://127.0.0.1 instead, add http://127.0.0.1 as another origin and use that same host consistently.
+   - This implementation posts the Google ID token to your PHP endpoint, so an Authorized redirect URI is not required.
+   - Copy the Client ID. Do not put a Client Secret in the website or send it to anyone.
+   - In Google Auth Platform -> Audience, keep the app in Testing and add your test Gmail account(s).
+
+5. ADD THE CLIENT ID
+   - Open google_config.php.
+   - Replace PASTE_YOUR_GOOGLE_WEB_CLIENT_ID_HERE with the full Web Client ID, keeping the single quotes.
+   - Example format only: 123456789012-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com
+   - Do not paste a Client Secret here.
+
+6. TEST
+   - Restart Apache in XAMPP.
+   - Open http://localhost/YouthEducationSupport/login.php
+   - You should see the Google button above the normal email/password form.
+   - Sign in with a Google account listed as a test user.
+   - An existing user with the same verified email is linked to Google and keeps their existing role.
+   - A brand-new Google account is created as a student.
+   - Normal email/password login remains available.
+
+REQUIREMENTS / TROUBLESHOOTING
+- PHP cURL extension must be enabled (extension=curl in the active php.ini); restart Apache after changing php.ini.
+- PHP mysqli and a working MySQL connection are required.
+- The computer needs internet access to load Google's sign-in button and validate ID tokens.
+- Browse using the exact host registered in Authorized JavaScript origins. Do not mix localhost and 127.0.0.1 during a test.
+- If Google says origin is not allowed, check the Authorized JavaScript origins and wait a few minutes for the change to apply.
+- If Google says access is blocked, check Audience -> Test users and add the Gmail account.
+- Never share a Client Secret, session cookie, password, or ID token.
+
+SECURITY NOTES
+- The browser sends Google's ID token, not a user-supplied email/name.
+- PHP checks the token with Google's HTTPS tokeninfo endpoint and verifies audience, issuer, expiry, and verified email.
+- New Google registrations are students only. Existing roles are preserved; Google sign-in cannot grant admin privileges.
+- For a production deployment, use HTTPS and consider switching token validation to Google's official PHP client library for local cryptographic verification.

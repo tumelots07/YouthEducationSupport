@@ -1,0 +1,26 @@
+REAL PHOTOGRAPHY CREDITS
+========================
+
+The website now uses real photographs instead of generated SVG poster artwork for its
+page banners, scholarship cards and event poster cards. Images are hosted by Pexels.
+Pexels marks the linked photo pages as free to use. Please review the current Pexels
+licence/terms before publishing the site publicly.
+
+Photos used:
+- Students studying in a library: https://www.pexels.com/photo/students-studying-together-at-a-library-6283211/
+- Students collaborating in a library: https://www.pexels.com/photo/multiethnic-students-doing-research-together-in-library-5940827/
+- Prayer / worship gathering: https://www.pexels.com/photo/group-of-people-praying-together-with-their-arms-raised-13899667/
+- Teacher helping a student: https://www.pexels.com/photo/teacher-helping-a-student-5428011/
+- Graduates celebrating: https://www.pexels.com/photo/group-of-people-wearing-academic-dress-7713349/
+- Tutoring session: https://www.pexels.com/photo/a-teacher-tutoring-her-student-6503098/
+- Students studying in a library: https://www.pexels.com/photo/students-studying-together-in-a-library-9572700/
+
+PHOTO BEHAVIOUR
+- Events containing "prayer", "worship" or "faith" use the real prayer/worship photo.
+- Events containing "tutor" or "mentor" use a tutoring photo.
+- Events containing "career" or "graduat" use a graduation photo.
+- Events containing "volunteer" or "community" use a volunteer/tutoring photo.
+- Events containing "study", "workshop" or "seminar" use a group learning photo.
+- Other events use a general student study photo.
+
+The images are externally hosted, so the browser needs an internet connection to display them.
